@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+@RequestMapping("/admin")
 @Controller
-public class UserController {
+public class AdminController {
 
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String getViewForAllUsers(Model model) {
+    @GetMapping
+    public String getViewForAdmins(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "viewForAdmins";
     }
