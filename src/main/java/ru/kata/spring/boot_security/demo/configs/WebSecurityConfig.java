@@ -25,8 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().successHandler(successUserHandler)
+                .permitAll()
+                .and()
+                .logout()
                 .permitAll();
 
     }
@@ -44,8 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails admin =
                 User.withDefaultPasswordEncoder()
-                        .username("Artyom")
-                        .password("ruka456456")
+                        .username("admin")
+                        .password("admin")
                         .roles("ADMIN")
                         .build();
 
