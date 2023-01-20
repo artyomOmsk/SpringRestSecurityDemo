@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -20,9 +22,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public String getUserView(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.getUserById(id));
+    @GetMapping
+    public String getUserView(Principal principal, Model model) {
+        model.addAttribute("user", userService.getUserByName(principal.getName()));
         return "userView";
     }
 
