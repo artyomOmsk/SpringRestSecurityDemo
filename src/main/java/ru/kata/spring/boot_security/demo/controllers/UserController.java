@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-@RequestMapping("/users")
 @Controller
 public class UserController {
 
@@ -18,46 +17,46 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String getAllUsersView(Model model) {
+    @GetMapping("/")
+    public String getViewForAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "index";
+        return "viewForAdmins";
     }
 
     @GetMapping("/{id}")
     public String getUserView(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUserById(id));
-        return "show";
+        return "userView";
     }
 
     @GetMapping("/new")
     public String getNewUserFormView(Model model) {
         model.addAttribute("user", new User());
-        return "new";
+        return "newUserFormView";
     }
 
     @PostMapping()
     public String createNewUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
     @GetMapping("/{id}/edit")
     public String getUpdateUserFormView(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUserById(id));
-        return "edit";
+        return "updateUserFormView";
     }
 
     @PostMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
         userService.updateUser(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(userService.getUserById(id));
-        return "redirect:/users";
+        return "redirect:/";
 
     }
 
