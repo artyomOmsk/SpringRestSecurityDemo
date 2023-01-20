@@ -8,12 +8,12 @@
 <body>
 <div>
   <th:block th:each="user : ${users}">
-    <a th:href="@{/users/{id}(id=${user.getId()})}"th:text="${user.getName()}">user</a>
+    <a th:href="@{/admin/{id}(id=${user.getId()})}"th:text="${user.getName()}">user</a>
     <br/>
   </th:block>
   <hr/>
-  <form th:method="GET" th:action="@{/users/new}">
-    <input type="button" value="Add new user" onclick="window.location.href = 'new'"/>
+  <form th:method="GET" th:action="@{/admin/new}">
+    <input type="button" value="Add new user" onclick="window.location.href = 'admin/new'"/>
   </form>
 
 </div>
