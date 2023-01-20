@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.services.RoleService;
+import ru.kata.spring.boot_security.demo.services.RoleServiceImp;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 @RequestMapping("/admin")
@@ -13,9 +15,12 @@ public class AdminController {
 
     private UserService userService;
 
+    private RoleService roleService;
+
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -33,6 +38,8 @@ public class AdminController {
     @GetMapping("/new")
     public String getNewUserFormView(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("adminRole", roleService.getRole("ADMIN"));
+        model.addAttribute("userRole", roleService.getRole("USER"));
         return "newUserFormView";
     }
 
