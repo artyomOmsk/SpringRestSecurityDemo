@@ -30,7 +30,7 @@ public class AdminController {
     @GetMapping("/{id}")
     public String getUserView(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.findUserById(id));
-        return "userView";
+        return "userViewForAdmin";
     }
 
     @GetMapping("/new")
@@ -41,8 +41,8 @@ public class AdminController {
     }
 
     @PostMapping
-    public String createNewUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        userService.saveUser(user, bindingResult);
+    public String createNewUser(@ModelAttribute("user") User user) {
+        userService.saveUser(user);
         return "redirect:/admin";
     }
 

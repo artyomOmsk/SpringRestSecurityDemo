@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 import java.security.Principal;
@@ -19,8 +16,6 @@ public class UserController {
 
     private UserServiceImpl userService;
 
-
-
     @Autowired
     public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
@@ -29,6 +24,6 @@ public class UserController {
     @GetMapping
     public String getUserView(Model model, Principal principal) {
         model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
-        return "userView";
+        return "userViewForUser";
     }
 }

@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
@@ -21,11 +20,13 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-
     @PersistenceContext
     private EntityManager em;
+
     private final UserRepository userRepository;
+
     private final RoleRepository roleRepository;
+
     private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -34,7 +35,6 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,17 +46,6 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
-
-//    public boolean searchUserByUsername(String username) {
-//        User user = userRepository.findByUsername(username);
-//        if (user == null) {
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
-
-
 
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
@@ -72,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void saveUser(User user, BindingResult bindingResult) {
+    public void saveUser(User user) {
 
         user.setRoles(user.getRoles());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -80,11 +69,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
-
     public void deleteUser(Long userId) {
-
         userRepository.deleteById(userId);
-
     }
 
     public void update(User updateUser) {

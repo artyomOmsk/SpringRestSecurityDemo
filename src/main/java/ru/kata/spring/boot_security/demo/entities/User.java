@@ -12,16 +12,16 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String username;
+
     private String password;
 
-
-    //    @Transient
-//    private String passwordConfirm;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
@@ -35,7 +35,6 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     @Override
     public String getUsername() {
@@ -80,7 +79,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -88,15 +86,6 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-    public boolean hasRole(int roleId) {
-        if (null == roles || 0 == roles.size()) {
-            return false;
-        }
-        Optional<Role> findRole = roles.stream().filter(role -> roleId == role.getId()).findFirst();
-        return findRole.isPresent();
-    }
-
 
     @Override
     public boolean equals(Object o) {
