@@ -47,25 +47,16 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public boolean searchUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+//    public boolean searchUserByUsername(String username) {
+//        User user = userRepository.findByUsername(username);
+//        if (user == null) {
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
 
-    public boolean searchUserByEmail(String email) {
-        User user = em.createQuery("SELECT u FROM User u WHERE u.email LIKE :paramEmail", User.class)
-                .setParameter("paramEmail", email).getResultStream().findFirst().orElse(null);;
 
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
@@ -81,33 +72,19 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-    public boolean saveUser(User user, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return false;
-        }
-        if (searchUserByUsername(user.getUsername())) {
-            return false;
-        }
-
-        if (searchUserByEmail(user.getEmail())) {
-            return false;
-        }
-
+    public void saveUser(User user, BindingResult bindingResult) {
 
         user.setRoles(user.getRoles());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return true;
+
     }
 
-    public boolean deleteUser(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
-            return true;
-        }
-        return false;
+
+    public void deleteUser(Long userId) {
+
+        userRepository.deleteById(userId);
+
     }
 
     public void update(User updateUser) {
