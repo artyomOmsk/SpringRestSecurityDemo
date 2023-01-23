@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Controller
@@ -45,7 +50,9 @@ public class AdminController {
     }
 
     @PostMapping
-    public String createNewUser(@ModelAttribute("user") User user) {
+    public String createNewUser(@ModelAttribute("user") User user, @RequestParam ArrayList<String> listRoleId) {
+
+        user.setRoles(roleService.convetToRolesSet(listRoleId));
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -58,7 +65,8 @@ public class AdminController {
     }
 
     @PostMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam ArrayList<String> listRoleId) {
+        user.setRoles(roleService.convetToRolesSet(listRoleId));
         userService.updateUser(user);
         return "redirect:/admin";
     }

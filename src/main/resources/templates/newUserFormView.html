@@ -15,17 +15,11 @@
         <input type="text" th:field="*{password}" id="password"/>
         </br>
 
-        <div id="roles">
-            <label>Roles:
-                <input type="checkbox" name="roleList"
-                       th:each="role : ${allRoles}"
-                       th:text="${role.getName()}"
-                       th:value="${role.id}"
-                       th:field="*{roles}"
-                />
-            </label>
-        </div>
-
+        <select multiple size="2" name="listRoleId" required class="form-control form-control-sm">
+            <option value="1">ROLE_ADMIN</option>
+            <option selected="selected" value="2">ROLE_USER</option>
+        </select>
+        </br>
         <input type="submit" value="Add new user"/>
         <a type="button" th:href="@{/logout}">Logout</a></p>
 
