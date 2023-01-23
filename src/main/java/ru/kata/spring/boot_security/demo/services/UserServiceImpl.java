@@ -5,40 +5,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.entities.Role;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @PersistenceContext
-    private EntityManager em;
+    private UserDao userDao;
 
-    private final UserRepository userRepository;
-
-    private final RoleRepository roleRepository;
+    private RoleDao roleDao;
 
     private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder bCryptPasswordEncoder) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userDao.getUserByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -47,36 +42,44 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public User findUserById(Long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
-    }
 
-    public List<User> allUsers() {
-        return userRepository.findAll();
-    }
-
-    public List<Role> allRoles() {
-        return roleRepository.findAll();
-    }
-
-
+    @Override
+    @Transactional
     public void saveUser(User user) {
-
         user.setRoles(user.getRoles());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-
+        userDao.saveUser(user);
     }
 
+    @Override
+    @Transactional
     public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+        userDao.deleteUser(userId);
     }
 
-    public void update(User updateUser) {
-        updateUser.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
-        em.merge(updateUser);
+    @Override
+    @Transactional
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 
+    @Override
+    @Transactional
+    public User getUserById(Long id) {
+        return userDao.getUserById(id);
+    }
 
+    @Override
+    @Transactional
+    public void updateUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userDao.updateUser(user);
+
+    }
+
+    @Override
+    @Transactional
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
+    }
 }

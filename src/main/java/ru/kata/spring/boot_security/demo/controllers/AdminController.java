@@ -3,9 +3,10 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.User;
+import ru.kata.spring.boot_security.demo.services.RoleService;
+import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 
@@ -14,29 +15,32 @@ import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 public class AdminController {
 
 
-    private UserServiceImpl userService;
+    private UserService userService;
+
+    private RoleService roleService;
 
     @Autowired
-    public void setUserService(UserServiceImpl userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping
     public String getViewForAdmins(Model model) {
-        model.addAttribute("allUsers", userService.allUsers());
+        model.addAttribute("allUsers", userService.getAllUsers());
         return "viewForAdmins";
     }
 
     @GetMapping("/{id}")
     public String getUserView(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.findUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "userViewForAdmin";
     }
 
     @GetMapping("/new")
     public String getNewUserFormView(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("allRoles", userService.allRoles());
+        model.addAttribute("allRoles", roleService.getAllRoles());
         return "newUserFormView";
     }
 
@@ -48,14 +52,14 @@ public class AdminController {
 
     @GetMapping("/{id}/edit")
     public String getUpdateUserFormView(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("allRoles", userService.allRoles());
+        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("allRoles", roleService.getAllRoles());
         return "updateUserFormView";
     }
 
     @PostMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
-        userService.update(user);
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 
