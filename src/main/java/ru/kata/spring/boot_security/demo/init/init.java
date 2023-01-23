@@ -26,17 +26,12 @@ public class init {
 
     @PostConstruct
     void postConstruct() {
-        Role roleAdmin = new Role(1L, "ROLE_ADMIN");
-        Role roleUser = new Role(2L, "ROLE_USER");
-        roleService.saveRole(roleAdmin);
-        roleService.saveRole(roleUser);
+        if (userService.getUserById(1L) == null & userService.getUserById(2L) == null) {
 
-        User adminUser = new User("admin", "admin", new HashSet<>(Set.of(roleAdmin)));
-        User userUser = new User("user", "user", new HashSet<>(Set.of(roleUser)));
-
-        userService.saveUser(adminUser);
-        userService.saveUser(userUser);
+            userService.saveUser(new User("admin", "admin", Set.of(roleService.getRoleById(1L))));
+            userService.saveUser(new User("user", "user", Set.of(roleService.getRoleById(2L))));
 
 
+        }
     }
 }

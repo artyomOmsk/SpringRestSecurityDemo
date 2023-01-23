@@ -48,4 +48,6 @@ public class RoleDaoImpl implements RoleDao {
     public Role getRoleByName(String name) {
         return entityManager.find(Role.class, name);
     }
+
+
 }
