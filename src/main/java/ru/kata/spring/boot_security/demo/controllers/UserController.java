@@ -23,7 +23,7 @@ public class UserController {
 
     @GetMapping
     public String getUserView(Model model, Principal principal) {
-        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
-        return "userViewForUser";
+        model.addAttribute("user", userService.getUserByUsername(principal.getName()));
+        return "viewForUsers";
     }
 }

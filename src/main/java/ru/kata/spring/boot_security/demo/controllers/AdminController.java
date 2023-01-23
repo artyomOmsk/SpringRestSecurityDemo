@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,8 +32,11 @@ public class AdminController {
     }
 
     @GetMapping
-    public String getViewForAdmins(Model model) {
+    public String getViewForAdmins(Model model, Principal principal) {
         model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("admin", userService.getUserByUsername(principal.getName()));
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("user", new User());
         return "viewForAdmins";
     }
 
@@ -51,7 +55,6 @@ public class AdminController {
 
     @PostMapping
     public String createNewUser(@ModelAttribute("user") User user, @RequestParam ArrayList<String> listRoleId) {
-
         user.setRoles(roleService.convetToRolesSet(listRoleId));
         userService.saveUser(user);
         return "redirect:/admin";
