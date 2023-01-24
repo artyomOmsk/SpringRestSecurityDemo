@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.entities.User;
 
@@ -15,16 +14,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    private RoleDao roleDao;
 
     private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
-        this.roleDao = roleDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 

@@ -54,6 +54,9 @@
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Username</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Phone Number</th>
                                     <th scope="col">Role</th>
                                     <th scope="col">Edit</th>
                                     <th scope="col">Delete</th>
@@ -63,7 +66,11 @@
                                 <tr th:each="user : ${allUsers}">
                                     <td th:text="${user.getId()}">Id</td>
                                     <td th:text="${user.getUsername()}">Username</td>
+                                    <td th:text="${user.getFirstName()}">First Name</td>
+                                    <td th:text="${user.getLastName()}">Last Name</td>
+                                    <td th:text="${user.getPhoneNumber()}">Phone Number</td>
                                     <td th:text="${user.getRoles()}">Role</td>
+
                                     <td>
                                         <button type="button" class="btn btn-info" data-toggle="modal"
                                                 data-target="#edit" th:attrappend="data-target=${user.id}">
@@ -96,22 +103,36 @@
                                                                        placeholder="username">
                                                             </div>
                                                             <div class="form-group text-center">
+                                                                <label class="font-weight-bold"
+                                                                       for="firstNameEdit">First Name</label>
+                                                                <input id="firstNameEdit" class="form-control"
+                                                                       th:name="firstName"
+                                                                       th:value="${user.firstName}"
+                                                                       placeholder="firstName">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <label class="font-weight-bold"
+                                                                       for="lastNameEdit">Last Name</label>
+                                                                <input id="lastNameEdit" class="form-control"
+                                                                       th:name="lastName"
+                                                                       th:value="${user.lastName}"
+                                                                       placeholder="lastName">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <label class="font-weight-bold"
+                                                                       for="phoneNumberEdit">Phone Number</label>
+                                                                <input id="phoneNumberEdit" class="form-control"
+                                                                       th:name="phoneNumber"
+                                                                       th:value="${user.phoneNumber}"
+                                                                       placeholder="phoneNumber">
+                                                            </div>
+                                                            <div class="form-group text-center">
                                                                 <label class="font-weight-bold" for="passwordEdit">Password</label>
                                                                 <input type="password" id="passwordEdit"
                                                                        class="form-control" th:name="password"
                                                                        th:value="${user.password}"
                                                                        placeholder="Password">
                                                             </div>
-<!--                                                            <div class="form-group text-center">-->
-<!--                                                                <label class="font-weight-bold"-->
-<!--                                                                       for="rolesEdit">Role</label> <br>-->
-<!--                                                                <select id="rolesEdit" class="form-select"-->
-<!--                                                                        name="listRoleId"-->
-<!--                                                                        multiple size="2">-->
-<!--                                                                    <option value="1">ROLE_ADMIN</option>-->
-<!--                                                                    <option value="2">ROLE_USER</option>-->
-<!--                                                                </select>-->
-<!--                                                            </div>-->
                                                             <div id="rolesEdit">
                                                                 <div th:each="role : ${roleAdmin}">
                                                                     <input type="checkbox" name="roles" th:id="${roleAdmin.name}" th:value="${roleAdmin.name}">
@@ -170,25 +191,36 @@
                                                             </div>
                                                             <div class="form-group text-center">
                                                                 <label class="font-weight-bold"
+                                                                       for="firstName">First Name</label>
+                                                                <input id="firstName" class="form-control"
+                                                                       th:name="firstName"
+                                                                       th:value="${user.firstName}"
+                                                                       placeholder="firstName">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <label class="font-weight-bold"
+                                                                       for="lastName">Last Name</label>
+                                                                <input id="lastName" class="form-control"
+                                                                       th:name="lastName"
+                                                                       th:value="${user.lastName}"
+                                                                       placeholder="lastName">
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <label class="font-weight-bold"
+                                                                       for="phoneNumber">Phone Number</label>
+                                                                <input id="phoneNumber" class="form-control"
+                                                                       th:name="phoneNumber"
+                                                                       th:value="${user.phoneNumber}"
+                                                                       placeholder="phoneNumber">
+                                                            </div>
+
+                                                            <div class="form-group text-center">
+                                                                <label class="font-weight-bold"
                                                                        for="Password">Password</label>
                                                                 <input type="password" id="Password"
                                                                        class="form-control" th:value="${user.password}"
                                                                        disabled>
                                                             </div>
-<!--                                                            <div class="form-group text-center">-->
-<!--                                                                <label class="font-weight-bold"-->
-<!--                                                                       for="roles2">Role</label> <br>-->
-<!--                                                                <select multiple class="form-control"-->
-<!--                                                                        th:size="${roles.size()}" id="roles2"-->
-<!--                                                                        name="roles2" disabled>-->
-<!--                                                                    <option th:each="role : ${roles}"-->
-<!--                                                                            th:text="${role.name}"-->
-<!--                                                                            th:value="${role.id}">-->
-<!--                                                                        <th:block th:text="${roles}">-->
-<!--                                                                        </th:block>-->
-<!--                                                                    </option>-->
-<!--                                                                </select>-->
-<!--                                                            </div>-->
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
@@ -223,6 +255,22 @@
                                                        placeholder="Username">
                                             </div>
                                             <div class="form-group text-center">
+                                                <label class="font-weight-bold" for="firstNameNew">First Name</label>
+                                                <input id="firstNameNew" class="form-control" th:field="*{firstName}"
+                                                       placeholder="firstName">
+                                            </div>
+                                            <div class="form-group text-center">
+                                                <label class="font-weight-bold" for="lastNameNew">Last Name</label>
+                                                <input id="lastNameNew" class="form-control" th:field="*{lastName}"
+                                                       placeholder="lastName">
+                                            </div>
+                                            <div class="form-group text-center">
+                                                <label class="font-weight-bold" for="phoneNumberNew">Phone Number</label>
+                                                <input id="phoneNumberNew" class="form-control" th:field="*{phoneNumber}"
+                                                       placeholder="phoneNumber">
+                                            </div>
+
+                                            <div class="form-group text-center">
                                                 <label class="font-weight-bold" for="passwordNew">Password</label>
                                                 <input type="password" id="passwordNew" class="form-control"
                                                        th:field="*{password}" placeholder="Password">
@@ -253,6 +301,9 @@
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">Username</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Phone Number</th>
                             <th scope="col">Role</th>
                         </tr>
                         </thead>
@@ -260,7 +311,11 @@
                         <tr>
                             <th scope="row" th:utext="${admin.id}">Id</th>
                             <td th:utext="${admin.username}">Username</td>
+                            <td th:utext="${admin.firstName}">First Name</td>
+                            <td th:utext="${admin.lastName}">Last Name</td>
+                            <td th:utext="${admin.phoneNumber}">Phone Number</td>
                             <td th:utext="${admin.roles}">Role</td>
+
                         </tr>
                         </tbody>
                     </table>

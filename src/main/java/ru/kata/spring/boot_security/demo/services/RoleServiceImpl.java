@@ -9,7 +9,7 @@ import ru.kata.spring.boot_security.demo.entities.Role;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl implements RoleService{
 
     private RoleDao roleDao;
 
