@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -22,10 +21,16 @@ public class User implements UserDetails {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
     public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public User(String username, String password, Set<Role> roles) {

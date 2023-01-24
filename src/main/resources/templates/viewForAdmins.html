@@ -165,20 +165,20 @@
                                                                        class="form-control" th:value="${user.password}"
                                                                        disabled>
                                                             </div>
-                                                            <div class="form-group text-center">
-                                                                <label class="font-weight-bold"
-                                                                       for="roles2">Role</label> <br>
-                                                                <select multiple class="form-control"
-                                                                        th:size="${roles.size()}" id="roles2"
-                                                                        name="roles2" disabled>
-                                                                    <option th:each="role : ${roles}"
-                                                                            th:text="${role.name}"
-                                                                            th:value="${role.id}">
-                                                                        <th:block th:text="${roles}">
-                                                                        </th:block>
-                                                                    </option>
-                                                                </select>
-                                                            </div>
+<!--                                                            <div class="form-group text-center">-->
+<!--                                                                <label class="font-weight-bold"-->
+<!--                                                                       for="roles2">Role</label> <br>-->
+<!--                                                                <select multiple class="form-control"-->
+<!--                                                                        th:size="${roles.size()}" id="roles2"-->
+<!--                                                                        name="roles2" disabled>-->
+<!--                                                                    <option th:each="role : ${roles}"-->
+<!--                                                                            th:text="${role.name}"-->
+<!--                                                                            th:value="${role.id}">-->
+<!--                                                                        <th:block th:text="${roles}">-->
+<!--                                                                        </th:block>-->
+<!--                                                                    </option>-->
+<!--                                                                </select>-->
+<!--                                                            </div>-->
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
@@ -217,15 +217,25 @@
                                                 <input type="password" id="passwordNew" class="form-control"
                                                        th:field="*{password}" placeholder="Password">
                                             </div>
-                                            <div class="form-group text-center">
-                                                <label class="font-weight-bold" for="rolesNew">Role</label> <br>
-                                                <select id="rolesNew" class="form-select"
-                                                        name="listRoleId"
-                                                        multiple size="2">
-                                                    <option value="1">ROLE_ADMIN</option>
-                                                    <option value="2">ROLE_USER</option>
-                                                </select>
+                                            <div id="roles">
+                                                <div th:each="role : ${roleAdmin}">
+                                                    <input type="checkbox" name="roles" th:id="${roleAdmin.name}" th:value="${roleAdmin.name}">
+                                                    <label th:for="${roleAdmin.name}" th:text="${roleAdmin.name}"/>
+                                                </div>
+                                                <div th:each="role : ${roleUser}">
+                                                    <input type="checkbox" name="roles" th:id="${roleUser.name}" th:value="${roleUser.name}">
+                                                    <label th:for="${roleUser.name}" th:text="${roleUser.name}"/>
+                                                </div>
                                             </div>
+<!--                                            <div class="form-group text-center">-->
+<!--                                                <label class="font-weight-bold" for="rolesNew">Role</label> <br>-->
+<!--                                                <select id="rolesNew" class="form-select"-->
+<!--                                                        name="listRoleId"-->
+<!--                                                        multiple size="2">-->
+<!--                                                    <option value="1">ROLE_ADMIN</option>-->
+<!--                                                    <option value="2">ROLE_USER</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
                                             <button type="submit" class="btn btn-success btn-lg">Add new user</button>
                                         </div>
                                     </form>

@@ -7,13 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
-import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
-
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -48,6 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(User user) {
+        user.setRoles(user.getRoles());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.saveUser(user);
     }
