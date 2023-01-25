@@ -96,6 +96,14 @@
                                                                    id="newFirstName"/>
                                                         </label>
                                                     </p>
+                                                    <p>
+                                                        <label class="container-fluid"
+                                                               for="newUserLastName"><strong>Last Name</strong>
+                                                            <input class="form-control" type="text"
+                                                                   name="lastName"
+                                                                   id="newUserLastName"/>
+                                                        </label>
+                                                    </p>
 
                                                     <p>
                                                         <label class="container-fluid"
@@ -105,14 +113,7 @@
                                                         </label>
                                                     </p>
 
-                                                    <p>
-                                                        <label class="container-fluid"
-                                                               for="newUserLastName"><strong>Last Name</strong>
-                                                            <input class="form-control" type="text"
-                                                                   name="lastName"
-                                                                   id="newUserLastName"/>
-                                                        </label>
-                                                    </p>
+
                                                     <p>
                                                         <label class="container-fluid"
                                                                for="newUserPassword"><strong>Password</strong>
@@ -121,15 +122,20 @@
                                                                    id="newUserPassword"/>
                                                         </label>
                                                     </p>
-                                                    <label class="container-fluid"
-                                                           for="newUserRoles"><strong>Role</strong>
-                                                        <select id="newUserRoles" class="form-control"
-                                                                name="roles"
-                                                                multiple size="2">
+                                                    <div class="form-group text-center">
+                                                        <label for="rolesName"
+                                                               class="front-weight-bold">Role</label>
+                                                        <select class="form-control"
+                                                                name="rolesName" id="rolesName"
+                                                                size="2"
+                                                                multiple>
+                                                            <option th:value="ROLE_ADMIN"
+                                                                    th:text="ADMIN"></option>
+                                                            <option th:value="ROLE_USER"
+                                                                    th:text="USER"></option>
 
                                                         </select>
-                                                    </label>
-                                                    </label>
+                                                    </div>
 
 
                                                     <button type="submit" id="newUserButton"
